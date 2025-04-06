@@ -3,10 +3,11 @@ kind: Service
 metadata:
   name: flask-service
 spec:
-  type: LoadBalancer
   selector:
-    app: flask-app
+    app: flask-app  # <-- should match your pod/deployment labels!
+  type: NodePort
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 5000
+      port: 5000       # port inside cluster
+      targetPort: 5000 # your Flask app
+      nodePort: 30007  # external port on the node
